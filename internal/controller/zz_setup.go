@@ -32,8 +32,13 @@ import (
 	instance "github.com/crossplane-contrib/provider-jet-gcp/internal/controller/compute/instance"
 	managedsslcertificate "github.com/crossplane-contrib/provider-jet-gcp/internal/controller/compute/managedsslcertificate"
 	network "github.com/crossplane-contrib/provider-jet-gcp/internal/controller/compute/network"
+	route "github.com/crossplane-contrib/provider-jet-gcp/internal/controller/compute/route"
 	router "github.com/crossplane-contrib/provider-jet-gcp/internal/controller/compute/router"
 	routernat "github.com/crossplane-contrib/provider-jet-gcp/internal/controller/compute/routernat"
+	sharedvpchostproject "github.com/crossplane-contrib/provider-jet-gcp/internal/controller/compute/sharedvpchostproject"
+	sharedvpcserviceproject "github.com/crossplane-contrib/provider-jet-gcp/internal/controller/compute/sharedvpcserviceproject"
+	sslcertificate "github.com/crossplane-contrib/provider-jet-gcp/internal/controller/compute/sslcertificate"
+	sslpolicy "github.com/crossplane-contrib/provider-jet-gcp/internal/controller/compute/sslpolicy"
 	subnetwork "github.com/crossplane-contrib/provider-jet-gcp/internal/controller/compute/subnetwork"
 	cluster "github.com/crossplane-contrib/provider-jet-gcp/internal/controller/container/cluster"
 	nodepool "github.com/crossplane-contrib/provider-jet-gcp/internal/controller/container/nodepool"
@@ -60,8 +65,13 @@ func Setup(mgr ctrl.Manager, l logging.Logger, wl workqueue.RateLimiter, ps terr
 		instance.Setup,
 		managedsslcertificate.Setup,
 		network.Setup,
+		route.Setup,
 		router.Setup,
 		routernat.Setup,
+		sharedvpchostproject.Setup,
+		sharedvpcserviceproject.Setup,
+		sslcertificate.Setup,
+		sslpolicy.Setup,
 		subnetwork.Setup,
 		cluster.Setup,
 		nodepool.Setup,

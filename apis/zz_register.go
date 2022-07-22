@@ -23,24 +23,26 @@ import (
 	"k8s.io/apimachinery/pkg/runtime"
 
 	v1alpha2 "github.com/crossplane-contrib/provider-jet-gcp/apis/cloudplatform/v1alpha2"
+	v1alpha1 "github.com/crossplane-contrib/provider-jet-gcp/apis/compute/v1alpha1"
 	v1alpha2compute "github.com/crossplane-contrib/provider-jet-gcp/apis/compute/v1alpha2"
 	v1alpha2container "github.com/crossplane-contrib/provider-jet-gcp/apis/container/v1alpha2"
 	v1alpha2monitoring "github.com/crossplane-contrib/provider-jet-gcp/apis/monitoring/v1alpha2"
 	v1alpha2sql "github.com/crossplane-contrib/provider-jet-gcp/apis/sql/v1alpha2"
 	v1alpha2storage "github.com/crossplane-contrib/provider-jet-gcp/apis/storage/v1alpha2"
-	v1alpha1 "github.com/crossplane-contrib/provider-jet-gcp/apis/v1alpha1"
+	v1alpha1apis "github.com/crossplane-contrib/provider-jet-gcp/apis/v1alpha1"
 )
 
 func init() {
 	// Register the types with the Scheme so the components can map objects to GroupVersionKinds and back
 	AddToSchemes = append(AddToSchemes,
 		v1alpha2.SchemeBuilder.AddToScheme,
+		v1alpha1.SchemeBuilder.AddToScheme,
 		v1alpha2compute.SchemeBuilder.AddToScheme,
 		v1alpha2container.SchemeBuilder.AddToScheme,
 		v1alpha2monitoring.SchemeBuilder.AddToScheme,
 		v1alpha2sql.SchemeBuilder.AddToScheme,
 		v1alpha2storage.SchemeBuilder.AddToScheme,
-		v1alpha1.SchemeBuilder.AddToScheme,
+		v1alpha1apis.SchemeBuilder.AddToScheme,
 	)
 }
 
