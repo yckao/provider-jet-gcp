@@ -63,6 +63,13 @@ var includeList = []string{
 
 	// Sql
 	"google_sql_.+",
+
+	// Customization
+	"google_compute_route$",
+	"google_compute_shared_vpc_host_project",
+	"google_compute_shared_vpc_service_project",
+	"google_compute_ssl_certificate",
+	"google_compute_ssl_policy",
 }
 
 // GetProvider returns provider configuration
