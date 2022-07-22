@@ -6,7 +6,7 @@ include ../../../build/makelib/common.mk
 
 # ====================================================================================
 #  Options
-DOCKER_REGISTRY ?= crossplane
+DOCKER_REGISTRY := yckao
 IMAGE = $(BUILD_REGISTRY)/provider-jet-gcp-$(ARCH)
 OSBASEIMAGE = scratch
 include ../../../build/makelib/image.mk
