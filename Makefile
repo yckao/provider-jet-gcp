@@ -2,7 +2,7 @@
 # Setup Project
 
 PROJECT_NAME := provider-jet-gcp
-PROJECT_REPO := github.com/crossplane-contrib/$(PROJECT_NAME)
+PROJECT_REPO := github.com/yckao/$(PROJECT_NAME)
 
 export TERRAFORM_VERSION := 1.0.11
 export TERRAFORM_PROVIDER_SOURCE := hashicorp/google
@@ -49,7 +49,7 @@ GO111MODULE = on
 # ====================================================================================
 # Setup Images
 
-DOCKER_REGISTRY := crossplane
+DOCKER_REGISTRY := yckao
 IMAGES = provider-jet-gcp provider-jet-gcp-controller
 -include build/makelib/image.mk
 
