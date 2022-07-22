@@ -19,7 +19,6 @@ package v1alpha2
 
 import (
 	"context"
-
 	common "github.com/crossplane-contrib/provider-jet-gcp/config/common"
 	reference "github.com/crossplane/crossplane-runtime/pkg/reference"
 	errors "github.com/pkg/errors"

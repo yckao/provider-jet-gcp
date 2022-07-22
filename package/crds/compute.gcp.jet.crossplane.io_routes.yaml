@@ -6,18 +6,18 @@ metadata:
   annotations:
     controller-gen.kubebuilder.io/version: v0.6.2
   creationTimestamp: null
-  name: users.sql.gcp.jet.crossplane.io
+  name: routes.compute.gcp.jet.crossplane.io
 spec:
-  group: sql.gcp.jet.crossplane.io
+  group: compute.gcp.jet.crossplane.io
   names:
     categories:
     - crossplane
     - managed
     - gcpjet
-    kind: User
-    listKind: UserList
-    plural: users
-    singular: user
+    kind: Route
+    listKind: RouteList
+    plural: routes
+    singular: route
   scope: Cluster
   versions:
   - additionalPrinterColumns:
@@ -33,10 +33,10 @@ spec:
     - jsonPath: .metadata.creationTimestamp
       name: AGE
       type: date
-    name: v1alpha2
+    name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: User is the Schema for the Users API
+        description: Route is the Schema for the Routes API
         properties:
           apiVersion:
             description: 'APIVersion defines the versioned schema of this representation
@@ -51,7 +51,7 @@ spec:
           metadata:
             type: object
           spec:
-            description: UserSpec defines the desired state of User
+            description: RouteSpec defines the desired state of Route
             properties:
               deletionPolicy:
                 default: Delete
@@ -64,74 +64,83 @@ spec:
                 type: string
               forProvider:
                 properties:
-                  deletionPolicy:
-                    description: 'The deletion policy for the user. Setting ABANDON
-                      allows the resource to be abandoned rather than deleted. This
-                      is useful for Postgres, where users cannot be deleted from the
-                      API if they have been granted SQL roles. Possible values are:
-                      "ABANDON".'
+                  description:
+                    description: An optional description of this resource. Provide
+                      this property when you create the resource.
                     type: string
-                  host:
-                    description: The host the user can connect from. This is only
-                      supported for MySQL instances. Don't set this field for PostgreSQL
-                      instances. Can be an IP address. Changing this forces a new
-                      resource to be created.
+                  destRange:
+                    description: The destination range of outgoing packets that this
+                      route applies to. Only IPv4 is supported.
                     type: string
-                  instance:
-                    description: The name of the Cloud SQL instance. Changing this
-                      forces a new resource to be created.
+                  name:
+                    description: Name of the resource. Provided by the client when
+                      the resource is created. The name must be 1-63 characters long,
+                      and comply with RFC1035.  Specifically, the name must be 1-63
+                      characters long and match the regular expression '[a-z]([-a-z0-9]*[a-z0-9])?'
+                      which means the first character must be a lowercase letter,
+                      and all following characters must be a dash, lowercase letter,
+                      or digit, except the last character, which cannot be a dash.
                     type: string
-                  instanceRef:
-                    description: A Reference to a named object.
-                    properties:
-                      name:
-                        description: Name of the referenced object.
-                        type: string
-                    required:
-                    - name
-                    type: object
-                  instanceSelector:
-                    description: A Selector selects an object.
-                    properties:
-                      matchControllerRef:
-                        description: MatchControllerRef ensures an object with the
-                          same controller reference as the selecting object is selected.
-                        type: boolean
-                      matchLabels:
-                        additionalProperties:
-                          type: string
-                        description: MatchLabels ensures an object with matching labels
-                          is selected.
-                        type: object
-                    type: object
-                  passwordSecretRef:
-                    description: The password for the user. Can be updated. For Postgres
-                      instances this is a Required field, unless type is set to either
-                      CLOUD_IAM_USER or CLOUD_IAM_SERVICE_ACCOUNT.
-                    properties:
-                      key:
-                        description: The key to select.
-                        type: string
-                      name:
-                        description: Name of the secret.
-                        type: string
-                      namespace:
-                        description: Namespace of the secret.
-                        type: string
-                    required:
-                    - key
-                    - name
-                    - namespace
-                    type: object
+                  network:
+                    description: The network that this route applies to.
+                    type: string
+                  nextHopGateway:
+                    description: 'URL to a gateway that should handle matching packets.
+                      Currently, you can only specify the internet gateway, using
+                      a full or partial valid URL: * ''https://www.googleapis.com/compute/v1/projects/project/global/gateways/default-internet-gateway''
+                      * ''projects/project/global/gateways/default-internet-gateway''
+                      * ''global/gateways/default-internet-gateway'' * The string
+                      ''default-internet-gateway''.'
+                    type: string
+                  nextHopIlb:
+                    description: "The IP address or URL to a forwarding rule of type
+                      loadBalancingScheme=INTERNAL that should handle matching packets.
+                      \n With the GA provider you can only specify the forwarding
+                      rule as a partial or full URL. For example, the following are
+                      all valid values: * 10.128.0.56 * https://www.googleapis.com/compute/v1/projects/project/regions/region/forwardingRules/forwardingRule
+                      * regions/region/forwardingRules/forwardingRule \n When the
+                      beta provider, you can also specify the IP address of a forwarding
+                      rule from the same VPC or any peered VPC. \n Note that this
+                      can only be used when the destinationRange is a public (non-RFC
+                      1918) IP CIDR range."
+                    type: string
+                  nextHopInstance:
+                    description: 'URL to an instance that should handle matching packets.
+                      You can specify this as a full or partial URL. For example:
+                      * ''https://www.googleapis.com/compute/v1/projects/project/zones/zone/instances/instance''
+                      * ''projects/project/zones/zone/instances/instance'' * ''zones/zone/instances/instance''
+                      * Just the instance name, with the zone in ''next_hop_instance_zone''.'
+                    type: string
+                  nextHopInstanceZone:
+                    description: The zone of the instance specified in next_hop_instance.
+                      Omit if next_hop_instance is specified as a URL.
+                    type: string
+                  nextHopIp:
+                    description: Network IP address of an instance that should handle
+                      matching packets.
+                    type: string
+                  nextHopVpnTunnel:
+                    description: URL to a VpnTunnel that should handle matching packets.
+                    type: string
+                  priority:
+                    description: "The priority of this route. Priority is used to
+                      break ties in cases where there is more than one matching route
+                      of equal prefix length. \n In the case of two routes with equal
+                      prefix length, the one with the lowest-numbered priority value
+                      wins. \n Default value is 1000. Valid range is 0 through 65535."
+                    format: int64
+                    type: integer
                   project:
-                    description: The ID of the project in which the resource belongs.
-                      If it is not provided, the provider project is used.
                     type: string
-                  type:
-                    description: The user type. It determines the method to authenticate
-                      the user during login. The default is the database's built-in
-                      user type. Flags include "BUILT_IN", "CLOUD_IAM_USER", or "CLOUD_IAM_SERVICE_ACCOUNT".
-                    type: string
+                  tags:
+                    description: A list of instance tags to which this route applies.
+                    items:
+                      type: string
+                    type: array
+                required:
+                - destRange
+                - name
+                - network
                 type: object
               providerConfigRef:
                 default:
@@ -178,11 +187,15 @@ spec:
             - forProvider
             type: object
           status:
-            description: UserStatus defines the observed state of User.
+            description: RouteStatus defines the observed state of Route.
             properties:
               atProvider:
                 properties:
                   id:
+                    type: string
+                  nextHopNetwork:
+                    type: string
+                  selfLink:
                     type: string
                 type: object
               conditions:

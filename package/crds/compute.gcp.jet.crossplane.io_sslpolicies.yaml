@@ -6,18 +6,18 @@ metadata:
   annotations:
     controller-gen.kubebuilder.io/version: v0.6.2
   creationTimestamp: null
-  name: users.sql.gcp.jet.crossplane.io
+  name: sslpolicies.compute.gcp.jet.crossplane.io
 spec:
-  group: sql.gcp.jet.crossplane.io
+  group: compute.gcp.jet.crossplane.io
   names:
     categories:
     - crossplane
     - managed
     - gcpjet
-    kind: User
-    listKind: UserList
-    plural: users
-    singular: user
+    kind: SSLPolicy
+    listKind: SSLPolicyList
+    plural: sslpolicies
+    singular: sslpolicy
   scope: Cluster
   versions:
   - additionalPrinterColumns:
@@ -33,10 +33,10 @@ spec:
     - jsonPath: .metadata.creationTimestamp
       name: AGE
       type: date
-    name: v1alpha2
+    name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: User is the Schema for the Users API
+        description: SSLPolicy is the Schema for the SSLPolicys API
         properties:
           apiVersion:
             description: 'APIVersion defines the versioned schema of this representation
@@ -51,7 +51,7 @@ spec:
           metadata:
             type: object
           spec:
-            description: UserSpec defines the desired state of User
+            description: SSLPolicySpec defines the desired state of SSLPolicy
             properties:
               deletionPolicy:
                 default: Delete
@@ -64,74 +64,52 @@ spec:
                 type: string
               forProvider:
                 properties:
-                  deletionPolicy:
-                    description: 'The deletion policy for the user. Setting ABANDON
-                      allows the resource to be abandoned rather than deleted. This
-                      is useful for Postgres, where users cannot be deleted from the
-                      API if they have been granted SQL roles. Possible values are:
-                      "ABANDON".'
+                  customFeatures:
+                    description: "Profile specifies the set of SSL features that can
+                      be used by the load balancer when negotiating SSL with clients.
+                      This can be one of 'COMPATIBLE', 'MODERN', 'RESTRICTED', or
+                      'CUSTOM'. If using 'CUSTOM', the set of SSL features to enable
+                      must be specified in the 'customFeatures' field. \n See the
+                      [official documentation](https://cloud.google.com/compute/docs/load-balancing/ssl-policies#profilefeaturesupport)
+                      for which ciphers are available to use. **Note**: this argument
+                      *must* be present when using the 'CUSTOM' profile. This argument
+                      *must not* be present when using any other profile."
+                    items:
+                      type: string
+                    type: array
+                  description:
+                    description: An optional description of this resource.
                     type: string
-                  host:
-                    description: The host the user can connect from. This is only
-                      supported for MySQL instances. Don't set this field for PostgreSQL
-                      instances. Can be an IP address. Changing this forces a new
-                      resource to be created.
+                  minTlsVersion:
+                    description: 'The minimum version of SSL protocol that can be
+                      used by the clients to establish a connection with the load
+                      balancer. Default value: "TLS_1_0" Possible values: ["TLS_1_0",
+                      "TLS_1_1", "TLS_1_2"]'
                     type: string
-                  instance:
-                    description: The name of the Cloud SQL instance. Changing this
-                      forces a new resource to be created.
+                  name:
+                    description: Name of the resource. Provided by the client when
+                      the resource is created. The name must be 1-63 characters long,
+                      and comply with RFC1035. Specifically, the name must be 1-63
+                      characters long and match the regular expression '[a-z]([-a-z0-9]*[a-z0-9])?'
+                      which means the first character must be a lowercase letter,
+                      and all following characters must be a dash, lowercase letter,
+                      or digit, except the last character, which cannot be a dash.
                     type: string
-                  instanceRef:
-                    description: A Reference to a named object.
-                    properties:
-                      name:
-                        description: Name of the referenced object.
-                        type: string
-                    required:
-                    - name
-                    type: object
-                  instanceSelector:
-                    description: A Selector selects an object.
-                    properties:
-                      matchControllerRef:
-                        description: MatchControllerRef ensures an object with the
-                          same controller reference as the selecting object is selected.
-                        type: boolean
-                      matchLabels:
-                        additionalProperties:
-                          type: string
-                        description: MatchLabels ensures an object with matching labels
-                          is selected.
-                        type: object
-                    type: object
-                  passwordSecretRef:
-                    description: The password for the user. Can be updated. For Postgres
-                      instances this is a Required field, unless type is set to either
-                      CLOUD_IAM_USER or CLOUD_IAM_SERVICE_ACCOUNT.
-                    properties:
-                      key:
-                        description: The key to select.
-                        type: string
-                      name:
-                        description: Name of the secret.
-                        type: string
-                      namespace:
-                        description: Namespace of the secret.
-                        type: string
-                    required:
-                    - key
-                    - name
-                    - namespace
-                    type: object
+                  profile:
+                    description: "Profile specifies the set of SSL features that can
+                      be used by the load balancer when negotiating SSL with clients.
+                      If using 'CUSTOM', the set of SSL features to enable must be
+                      specified in the 'customFeatures' field. \n See the [official
+                      documentation](https://cloud.google.com/compute/docs/load-balancing/ssl-policies#profilefeaturesupport)
+                      for information on what cipher suites each profile provides.
+                      If 'CUSTOM' is used, the 'custom_features' attribute **must
+                      be set**. Default value: \"COMPATIBLE\" Possible values: [\"COMPATIBLE\",
+                      \"MODERN\", \"RESTRICTED\", \"CUSTOM\"]"
+                    type: string
                   project:
-                    description: The ID of the project in which the resource belongs.
-                      If it is not provided, the provider project is used.
                     type: string
-                  type:
-                    description: The user type. It determines the method to authenticate
-                      the user during login. The default is the database's built-in
-                      user type. Flags include "BUILT_IN", "CLOUD_IAM_USER", or "CLOUD_IAM_SERVICE_ACCOUNT".
-                    type: string
+                required:
+                - name
                 type: object
               providerConfigRef:
                 default:
@@ -178,11 +156,21 @@ spec:
             - forProvider
             type: object
           status:
-            description: UserStatus defines the observed state of User.
+            description: SSLPolicyStatus defines the observed state of SSLPolicy.
             properties:
               atProvider:
                 properties:
+                  creationTimestamp:
+                    type: string
+                  enabledFeatures:
+                    items:
+                      type: string
+                    type: array
+                  fingerprint:
+                    type: string
                   id:
+                    type: string
+                  selfLink:
                     type: string
                 type: object
               conditions:
