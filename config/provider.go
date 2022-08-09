@@ -72,7 +72,6 @@ var includeList = []string{
 	"google_compute_ssl_policy",
 	"google_compute_network_peering",
 	"google_compute_network_peering_routes_config",
-
 }
 
 // GetProvider returns provider configuration
