@@ -32,6 +32,8 @@ import (
 	instance "github.com/crossplane-contrib/provider-jet-gcp/internal/controller/compute/instance"
 	managedsslcertificate "github.com/crossplane-contrib/provider-jet-gcp/internal/controller/compute/managedsslcertificate"
 	network "github.com/crossplane-contrib/provider-jet-gcp/internal/controller/compute/network"
+	networkpeering "github.com/crossplane-contrib/provider-jet-gcp/internal/controller/compute/networkpeering"
+	networkpeeringroutesconfig "github.com/crossplane-contrib/provider-jet-gcp/internal/controller/compute/networkpeeringroutesconfig"
 	route "github.com/crossplane-contrib/provider-jet-gcp/internal/controller/compute/route"
 	router "github.com/crossplane-contrib/provider-jet-gcp/internal/controller/compute/router"
 	routernat "github.com/crossplane-contrib/provider-jet-gcp/internal/controller/compute/routernat"
@@ -65,6 +67,8 @@ func Setup(mgr ctrl.Manager, l logging.Logger, wl workqueue.RateLimiter, ps terr
 		instance.Setup,
 		managedsslcertificate.Setup,
 		network.Setup,
+		networkpeering.Setup,
+		networkpeeringroutesconfig.Setup,
 		route.Setup,
 		router.Setup,
 		routernat.Setup,
