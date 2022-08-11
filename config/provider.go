@@ -72,6 +72,13 @@ var includeList = []string{
 	"google_compute_ssl_policy",
 	"google_compute_network_peering",
 	"google_compute_network_peering_routes_config",
+
+	// Customization - Loadbalancing
+	"google_compute_global_forwarding_rule",
+	"google_compute_target_http_proxy",
+	"google_compute_target_https_proxy",
+	"google_compute_url_map",
+	"google_compute_backend_bucket",
 }
 
 // GetProvider returns provider configuration

@@ -28,7 +28,10 @@ import (
 	serviceaccount "github.com/crossplane-contrib/provider-jet-gcp/internal/controller/cloudplatform/serviceaccount"
 	serviceaccountkey "github.com/crossplane-contrib/provider-jet-gcp/internal/controller/cloudplatform/serviceaccountkey"
 	address "github.com/crossplane-contrib/provider-jet-gcp/internal/controller/compute/address"
+	backendbucket "github.com/crossplane-contrib/provider-jet-gcp/internal/controller/compute/backendbucket"
+	backendbucketsignedurlkey "github.com/crossplane-contrib/provider-jet-gcp/internal/controller/compute/backendbucketsignedurlkey"
 	firewall "github.com/crossplane-contrib/provider-jet-gcp/internal/controller/compute/firewall"
+	globalforwardingrule "github.com/crossplane-contrib/provider-jet-gcp/internal/controller/compute/globalforwardingrule"
 	instance "github.com/crossplane-contrib/provider-jet-gcp/internal/controller/compute/instance"
 	managedsslcertificate "github.com/crossplane-contrib/provider-jet-gcp/internal/controller/compute/managedsslcertificate"
 	network "github.com/crossplane-contrib/provider-jet-gcp/internal/controller/compute/network"
@@ -42,6 +45,9 @@ import (
 	sslcertificate "github.com/crossplane-contrib/provider-jet-gcp/internal/controller/compute/sslcertificate"
 	sslpolicy "github.com/crossplane-contrib/provider-jet-gcp/internal/controller/compute/sslpolicy"
 	subnetwork "github.com/crossplane-contrib/provider-jet-gcp/internal/controller/compute/subnetwork"
+	targethttpproxy "github.com/crossplane-contrib/provider-jet-gcp/internal/controller/compute/targethttpproxy"
+	targethttpsproxy "github.com/crossplane-contrib/provider-jet-gcp/internal/controller/compute/targethttpsproxy"
+	urlmap "github.com/crossplane-contrib/provider-jet-gcp/internal/controller/compute/urlmap"
 	cluster "github.com/crossplane-contrib/provider-jet-gcp/internal/controller/container/cluster"
 	nodepool "github.com/crossplane-contrib/provider-jet-gcp/internal/controller/container/nodepool"
 	alertpolicy "github.com/crossplane-contrib/provider-jet-gcp/internal/controller/monitoring/alertpolicy"
@@ -63,7 +69,10 @@ func Setup(mgr ctrl.Manager, l logging.Logger, wl workqueue.RateLimiter, ps terr
 		serviceaccount.Setup,
 		serviceaccountkey.Setup,
 		address.Setup,
+		backendbucket.Setup,
+		backendbucketsignedurlkey.Setup,
 		firewall.Setup,
+		globalforwardingrule.Setup,
 		instance.Setup,
 		managedsslcertificate.Setup,
 		network.Setup,
@@ -77,6 +86,9 @@ func Setup(mgr ctrl.Manager, l logging.Logger, wl workqueue.RateLimiter, ps terr
 		sslcertificate.Setup,
 		sslpolicy.Setup,
 		subnetwork.Setup,
+		targethttpproxy.Setup,
+		targethttpsproxy.Setup,
+		urlmap.Setup,
 		cluster.Setup,
 		nodepool.Setup,
 		alertpolicy.Setup,
