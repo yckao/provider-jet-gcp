@@ -72,6 +72,7 @@ var includeList = []string{
 	"google_compute_ssl_policy",
 	"google_compute_network_peering",
 	"google_compute_network_peering_routes_config",
+	"google_dns_managed_zone",
 
 	// Customization - Loadbalancing
 	"google_compute_global_forwarding_rule",

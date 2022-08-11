@@ -50,6 +50,7 @@ import (
 	urlmap "github.com/crossplane-contrib/provider-jet-gcp/internal/controller/compute/urlmap"
 	cluster "github.com/crossplane-contrib/provider-jet-gcp/internal/controller/container/cluster"
 	nodepool "github.com/crossplane-contrib/provider-jet-gcp/internal/controller/container/nodepool"
+	managedzone "github.com/crossplane-contrib/provider-jet-gcp/internal/controller/dns/managedzone"
 	alertpolicy "github.com/crossplane-contrib/provider-jet-gcp/internal/controller/monitoring/alertpolicy"
 	notificationchannel "github.com/crossplane-contrib/provider-jet-gcp/internal/controller/monitoring/notificationchannel"
 	uptimecheckconfig "github.com/crossplane-contrib/provider-jet-gcp/internal/controller/monitoring/uptimecheckconfig"
@@ -91,6 +92,7 @@ func Setup(mgr ctrl.Manager, l logging.Logger, wl workqueue.RateLimiter, ps terr
 		urlmap.Setup,
 		cluster.Setup,
 		nodepool.Setup,
+		managedzone.Setup,
 		alertpolicy.Setup,
 		notificationchannel.Setup,
 		uptimecheckconfig.Setup,
